@@ -32,7 +32,6 @@ function drawKeyBoard() {
     }
   }
 }
-
 //Llama a la Api para obtener la frase generada aleatoriamente.
 const getPhrase = async () => {
   const response = await fetch("http://api.quotable.io/random?maxLength=35");
