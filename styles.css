@@ -1,20 +1,78 @@
-*{
+* {
     margin: 0;
     padding: 0
 }
-.game{
+
+.game {
     display: grid;
-    grid-template-columns: repeat(2,1fr);
+    grid-template-columns: repeat(2, 1fr);
 }
 
-.game-info{
-    text-align: center;
-    background-color:bisque;
+.game-image {
+    background-color: aqua;
+    width: 50vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
 }
-#title{
+
+.game-image img {
+    width: 100%;
+    max-height: 100%;
+}
+
+.game-info {
+    text-align: center;
+    background-color: bisque;
+}
+
+#title {
     font-family: 'Shadows Into Light', cursive;
     font-size: 4.5rem;
 }
-#title-instructions{
+
+#title-instructions {
     font-size: 2rem;
+}
+
+#phrase {
+    font-size: 2rem;
+    margin: 2rem;
+}
+
+.keyBoardKey {
+    width: 50px;
+    height: 50px;
+    margin: 3px;
+    background-color: antiquewhite;
+    border-radius: 5px;
+    font-size: 20px;
+}
+.credits {
+    position: absolute;
+    bottom: 0;
+    right: 15%;
+}
+
+@media (max-width: 600px) {
+    .game {
+        grid-template-columns: repeat(1, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+    }
+
+    .keyBoardKey {
+        width: 2.2rem;
+        height: 2.2rem;
+        border-radius: 5px;
+        font-size: 1rem;
+    }
+    .game-image {
+        width: 100vw;
+        height: 50vh;
+    }
+    .credits {
+        position: absolute;
+        bottom: 0;
+        right: 20%;
+    }
 }
