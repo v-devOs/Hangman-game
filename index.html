@@ -1,16 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
     <title>HangMan-Game</title>
-    
+
 </head>
+
 <body>
-    <h1 id="title">HangMan Game</h1>
+    <!--Esta es la pantalla total del juego-->
+    <div class="game">
+        <!--Aquí se pondría el dibujo del ahorcado-->
+        <div class="game-image">
+
+        </div>
+        <!--Aquí va el título del juego, la parte de la frase y todas las opciones de letras-->
+        <div class="game-info">
+            <!--Título del juego-->
+            <h1 id="title">HangMan Game</h1>
+
+            <!--Frase random generada por API-->
+            <p>Aquí va la frase random</p>
+
+            <!--Esta es la división para crear un teclado virtual-->
+            <div>
+
+            </div>
+        </div>
+    </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="game.js"></script>
 </body>
+
 </html>
