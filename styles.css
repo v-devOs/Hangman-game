@@ -2,7 +2,6 @@
     margin: 0;
     padding: 0
 }
-
 .game{
     display: grid;
     grid-template-columns: repeat(2,1fr);
@@ -11,4 +10,11 @@
 .game-info{
     text-align: center;
     background-color:bisque;
+}
+#title{
+    font-family: 'Shadows Into Light', cursive;
+    font-size: 4.5rem;
+}
+#title-instructions{
+    font-size: 2rem;
 }
