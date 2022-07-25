@@ -34,6 +34,17 @@
 #title-instructions {
     font-size: 2rem;
 }
+#spaceToCellsPharse{
+    padding-top: 10%;
+}
+.cellToPharse{
+    background-color: white;
+    border-bottom: 1px solid black;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin: 2px;
+}
 
 #phrase {
     font-size: 2rem;
@@ -41,13 +52,32 @@
 }
 
 .keyBoardKey {
-    width: 50px;
-    height: 50px;
+    width: 30px;
+    height: 30px;
     margin: 3px;
     background-color: antiquewhite;
     border-radius: 5px;
     font-size: 20px;
 }
+.keyPressedCorrect{
+    width: 30px;
+    height: 30px;
+    margin: 3px;
+    background-color: greenyellow;
+    border-radius: 5px;
+    font-size: 20px;
+    color: white;
+}
+.keyPressedIncorrect{
+    width: 30px;
+    height: 30px;
+    margin: 3px;
+    background-color:red;
+    border-radius: 5px;
+    font-size: 20px;
+    color: white;
+}
+
 .credits {
     position: absolute;
     bottom: 0;
