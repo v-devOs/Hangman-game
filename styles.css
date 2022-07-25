@@ -9,7 +9,7 @@
 }
 
 .game-image {
-    background-color: aqua;
+    background-color:bisque;
     width: 50vw;
     height: 100vh;
     display: flex;
@@ -19,11 +19,13 @@
 .game-image img {
     width: 100%;
     max-height: 100%;
+    border: 2px solid black;
 }
 
 .game-info {
     text-align: center;
     background-color: bisque;
+    border: 2px solid black;
 }
 
 #title {
@@ -36,10 +38,18 @@
 }
 #spaceToCellsPharse{
     padding-top: 10%;
+    margin: 2rem;
 }
 .cellToPharse{
-    background-color: white;
-    border-bottom: 1px solid black;
+    background-color: transparent;
+    border-bottom: 2px solid black;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin: 2px;
+}
+.emptyCellToPhrase{
+    background-color: transparent;
     display: inline-block;
     width: 20px;
     height: 20px;
@@ -81,18 +91,17 @@
 .credits {
     position: absolute;
     bottom: 0;
-    right: 15%;
+    right:calc(15%);
 }
 
 @media (max-width: 600px) {
     .game {
         grid-template-columns: repeat(1, 1fr);
-        grid-template-rows: repeat(2, 1fr);
     }
 
     .keyBoardKey {
-        width: 2.2rem;
-        height: 2.2rem;
+        width: 2rem;
+        height: 2rem;
         border-radius: 5px;
         font-size: 1rem;
     }
@@ -101,8 +110,25 @@
         height: 50vh;
     }
     .credits {
-        position: absolute;
+        margin-top: 3rem;
+        position: relative;
         bottom: 0;
-        right: 20%;
+        right: inherit;
     }
+    .game-image{
+        margin-bottom: 0;
+    }
+    .game-info{
+        margin-top: 0;
+        height: 50vh;
+    }
+    #title{
+        font-size: 4rem;
+    }
+    #spaceToCellsPharse{
+        padding-top: 0;
+        margin: 1rem;
+        margin-bottom: 1.5rem;
+    }
+    
 }
