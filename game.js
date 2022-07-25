@@ -20,11 +20,13 @@ $(document).on("keypress", async (event) => {
 });
 //Llama a la Api para obtener la frase generada aleatoriamente.
 const getPhrase = async () => {
-  const response = await fetch("http://api.quotable.io/random?maxLength=35");
+  const numeroDeLetrasMaximoDeLaFrase = 30 ;
+  const response = await fetch(`http://api.quotable.io/random?maxLength=${numeroDeLetrasMaximoDeLaFrase}`);
   const phrase = await response.json();
   //Tuve que convertir la frase a minusculas :c
   return phrase.content.toLowerCase();
 };
+
 //Dibujando el teclado
 function drawKeyBoard() {
   let rowTopKeyBoard = ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p"];
@@ -83,22 +85,31 @@ function showCharactersSpecials(){
   }
 }
 //Funcion que se ejecuta solo en caso de que la letra del boton pulsado exista en la frase generada
-function showWordsAppear(array,word){
+function showWordsAppear(array,letter){
   //Verificando si la letra pulsada existe en la frase
   let indices = [];
-  let idx = array.indexOf(word);
+  let idx = array.indexOf(letter);
   while (idx != -1) {
     indices.push(idx);
-    idx = array.indexOf(word, idx + 1);
+    idx = array.indexOf(letter, idx + 1);
   }
   // Mostrando las letras de la tecla pulsada que aparecen en la frase
   for (let i = 0; i < indices.length; i++) {
-    $("#cell"+indices[i]).text(word);
-    
+    $("#cell"+indices[i]).text(letter);
+    if(letter==" ") {
+      $("#cell"+indices[i]).removeClass("cellToPharse");
+      $("#cell"+indices[i]).addClass("emptyCellToPhrase");
+    }
   }
 }
 //Con esta funcion vamos cambiando la imagen que se muestra de monito
 function changeValuesFail(){
+  if(fails < 9){
   fails++;
-  $(".game-image img").attr("src","./assets/img/"+fails+".jpg")
+  $(".game-image img").attr("src",`./assets/img/${fails}.jpg`); 
+  }
+  //Si ya perdió el usuario aquí deberíamos de mostrar una pantalla de que perdió e iniciar de nuevo
+  else{
+    $(".game-image img").attr("src",`./assets/img/dead.png`);
+  }
 }
