@@ -8,10 +8,10 @@ var phrase;
 
 //Instruccion de iniciar el juego
 startGame(statusGame);
-function startGame(){
-  $(document).on("keypress", async (event) => {
+function startGame(statusGame){
+  $(document).on("keypress", async () => {
     //Inicio del juego
-    if (!statusGame && event.code === "Enter") {
+    if (!statusGame) {
       $("#title-instructions").text("");
       statusGame = true;
       //Llamado de la función para traer la frase
@@ -141,10 +141,7 @@ const finishedGame = (fails,success,statusGame) =>{
   else if(fails === 9){$("#messege-game-finished").text("Good look next time you lose in " + fails+ " attempts");}
   //Instrucciones para inicial el juego nuevamente
   $("#title-instructions").text("Press any key to play again");
-  $(document).on("keypress",function(){
-    $(".cellToPharse").remove();
-    $(".emptyCellToPhrase").remove();
-    startGame(statusGame);
-  })
-  
+  $(".cellToPharse").remove();
+  $(".emptyCellToPhrase").remove();
+  startGame(statusGame);
 }
