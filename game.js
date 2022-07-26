@@ -5,21 +5,24 @@ let success = 0;
 let x = 0;
 let lettersUsed = [];
 var phrase;
+
 //Instruccion de iniciar el juego
-$(document).on("keypress", async (event) => {
-  //Inicio del juego
-  if (!statusGame && event.code === "Enter") {
-    $("#title-instructions").remove();
-    statusGame = true;
-    //Llamado de la función para traer la frase
-    phrase = await getPhrase();
-    console.log(phrase.length);
-    //Dibujando teclado y celdas para la frase
-    drawKeyBoard();
-    drawCellsToPharse(phrase);
-    showCharactersSpecials()  
-  }
-});
+startGame(statusGame);
+function startGame(){
+  $(document).on("keypress", async (event) => {
+    //Inicio del juego
+    if (!statusGame && event.code === "Enter") {
+      $("#title-instructions").text("");
+      statusGame = true;
+      //Llamado de la función para traer la frase
+      phrase = await getPhrase();
+      //Dibujando teclado y celdas para la frase
+      drawKeyBoard();
+      drawCellsToPharse(phrase);
+      showCharactersSpecials()  
+    }
+  });
+}
 //Llama a la Api para obtener la frase generada aleatoriamente.
 const getPhrase = async () => {
   const numeroDeLetrasMaximoDeLaFrase = 30 ;
@@ -69,16 +72,12 @@ const checkKeyPressed = (keyPressed) =>{
   let arrayFromPharse = Array.from(phrase);
   //Verificando y devolviendo valor
   if(arrayFromPharse.includes(keyPressed)){
-    if(success < phrase.length){
-      if(!lettersUsed.includes(keyPressed)){
-        showLettersAppear(arrayFromPharse,keyPressed);
-        lettersUsed.push(keyPressed);
-        return "correct";
-      }     
-    }
-    else if(success === phrase.length){
-      $("h1").remove();
-    } 
+    if(!lettersUsed.includes(keyPressed)){
+      showLettersAppear(arrayFromPharse,keyPressed);
+      lettersUsed.push(keyPressed);
+      
+    }  
+    return "correct";
   }
   else{
     changeValuesFail();
@@ -108,16 +107,16 @@ const showLettersAppear = (array,letter) =>{
   for (let i = 0; i < indices.length; i++) {
     if(letter==" ") {
       $("#cell"+indices[i]).removeClass("cellToPharse");
-      $("#cell"+indices[i]).addClass("emptyCellToPhrase");
-      
+      $("#cell"+indices[i]).addClass("emptyCellToPhrase");  
     }
     else{
       $("#cell"+indices[i]).text(letter);
-      
     }
   }
-  console.log("this is the length of array: "+indices.length);
-  console.log(success+=indices.length);
+  success += indices.length;
+  if(success === phrase.length){
+    finishedGame(fails,success,statusGame);
+  }
 }
 //Con esta funcion vamos cambiando la imagen que se muestra de monito
 const changeValuesFail = () =>{
@@ -128,5 +127,24 @@ const changeValuesFail = () =>{
     //Si ya perdió el usuario aquí deberíamos de mostrar una pantalla de que perdió e iniciar de nuevo
     else{
       $(".game-image img").attr("src",`./assets/img/dead.png`);
+      finishedGame(fails,success,statusGame);
     }
+}
+
+//Funcion que se ejecuta al alcanzar el limite de errores o completar la frase generada
+const finishedGame = (fails,success,statusGame) =>{
+  //Borando teclado y cambiando estado del juego
+  $(".keyBoardKey").remove();
+  statusGame = false;
+  //Colocando un mensaje al jugador
+  if(success === phrase.length){$("#messege-game-finished").text("Congratulations!! you have " + fails+ " fails")}
+  else if(fails === 9){$("#messege-game-finished").text("Good look next time you lose in " + fails+ " attempts");}
+  //Instrucciones para inicial el juego nuevamente
+  $("#title-instructions").text("Press any key to play again");
+  $(document).on("keypress",function(){
+    $(".cellToPharse").remove();
+    $(".emptyCellToPhrase").remove();
+    startGame(statusGame);
+  })
+  
 }
