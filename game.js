@@ -1,6 +1,9 @@
 //Variables de uso global
 let statusGame = false;
 let fails = 0;
+let success = 0;
+let x = 0;
+let lettersUsed = [];
 var phrase;
 //Instruccion de iniciar el juego
 $(document).on("keypress", async (event) => {
@@ -10,12 +13,11 @@ $(document).on("keypress", async (event) => {
     statusGame = true;
     //Llamado de la función para traer la frase
     phrase = await getPhrase();
+    console.log(phrase.length);
     //Dibujando teclado y celdas para la frase
     drawKeyBoard();
     drawCellsToPharse(phrase);
     showCharactersSpecials()  
-    //Incertar frase al html
-    $("#phrase").text(phrase);
   }
 });
 //Llama a la Api para obtener la frase generada aleatoriamente.
@@ -46,7 +48,7 @@ function drawKeyBoard() {
   }
 }
 //Dibujando celdas de la frase
-function drawCellsToPharse(phraseToCell){
+const drawCellsToPharse = (phraseToCell) => {
   for (let i = 0; i < phraseToCell.length; i++) {
     //Generando id Dinamico
     let cellId = 'id="cell'+i+'"';
@@ -62,30 +64,39 @@ $(document).on("click",".keyBoardKey",function(){
   if(checkKeyPressed(buttonInner) === "correct"){$(this).addClass("keyPressedCorrect");}
   else{$(this).addClass("keyPressedIncorrect");}
 })
-//Funcion que verifica si el valor de la tecla pulsada existe en la frase generada
-function checkKeyPressed(keyPressed){
+// Funcion que verifica si el valor de la tecla pulsada existe en la frase generada
+const checkKeyPressed = (keyPressed) =>{
   let arrayFromPharse = Array.from(phrase);
   //Verificando y devolviendo valor
   if(arrayFromPharse.includes(keyPressed)){
-    showWordsAppear(arrayFromPharse,keyPressed);
-    return "correct";
+    if(success < phrase.length){
+      if(!lettersUsed.includes(keyPressed)){
+        showLettersAppear(arrayFromPharse,keyPressed);
+        lettersUsed.push(keyPressed);
+        return "correct";
+      }     
+    }
+    else if(success === phrase.length){
+      $("h1").remove();
+    } 
   }
   else{
     changeValuesFail();
     return "incorrect";
-  } 
+  }
 }
-
 //Funcion que muestra los caracteres especiales de la frase generada
-function showCharactersSpecials(){
-  let characters = [" ",",",".",";"];
+const showCharactersSpecials = () =>{
+  let characters = [" ",",",".",";","'","!"];
   let arrayFromPharse = Array.from(phrase);
   for (let i = 0; i < characters.length; i++) {
-    showWordsAppear(arrayFromPharse,characters[i]);
+    if(arrayFromPharse.includes(characters[i])){
+      showLettersAppear(arrayFromPharse,characters[i]);
+    }
   }
 }
 //Funcion que se ejecuta solo en caso de que la letra del boton pulsado exista en la frase generada
-function showWordsAppear(array,letter){
+const showLettersAppear = (array,letter) =>{
   //Verificando si la letra pulsada existe en la frase
   let indices = [];
   let idx = array.indexOf(letter);
@@ -95,21 +106,27 @@ function showWordsAppear(array,letter){
   }
   // Mostrando las letras de la tecla pulsada que aparecen en la frase
   for (let i = 0; i < indices.length; i++) {
-    $("#cell"+indices[i]).text(letter);
     if(letter==" ") {
       $("#cell"+indices[i]).removeClass("cellToPharse");
       $("#cell"+indices[i]).addClass("emptyCellToPhrase");
+      
+    }
+    else{
+      $("#cell"+indices[i]).text(letter);
+      
     }
   }
+  console.log("this is the length of array: "+indices.length);
+  console.log(success+=indices.length);
 }
 //Con esta funcion vamos cambiando la imagen que se muestra de monito
-function changeValuesFail(){
+const changeValuesFail = () =>{
   if(fails < 9){
-  fails++;
-  $(".game-image img").attr("src",`./assets/img/${fails}.jpg`); 
-  }
-  //Si ya perdió el usuario aquí deberíamos de mostrar una pantalla de que perdió e iniciar de nuevo
-  else{
-    $(".game-image img").attr("src",`./assets/img/dead.png`);
-  }
+    fails++;
+    $(".game-image img").attr("src",`./assets/img/${fails}.jpg`); 
+    }
+    //Si ya perdió el usuario aquí deberíamos de mostrar una pantalla de que perdió e iniciar de nuevo
+    else{
+      $(".game-image img").attr("src",`./assets/img/dead.png`);
+    }
 }
