@@ -11,7 +11,7 @@ startGame(statusGame);
 
 function startGame(statusGame) {
   statusGame = false;
-  fails = 0;
+  fails = 0; 
   success = 0;
   x = 0;
   lettersUsed = [];
