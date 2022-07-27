@@ -10,9 +10,17 @@ var phrase;
 startGame(statusGame);
 
 function startGame(statusGame) {
+  statusGame = false;
+  fails = 0; 
+  success = 0;
+  x = 0;
+  lettersUsed = [];
+  phrase="";
+
   $(document).on("keypress", async () => {
     //Inicio del juego
     if (!statusGame) {
+      $(".game-image img").attr("src", `./assets/img/${fails}.jpg`);
       $("#messege-game-finished").text("");
       $("#title-instructions").text("");
       statusGame = true;
@@ -142,6 +150,7 @@ const finishedGame = (fails, success, statusGame) => {
   statusGame = false;
   //Colocando un mensaje al jugador
   if (success === phrase.length) {
+    $(".game-image img").attr("src", `./assets/img/victory.png`);
     $("#messege-game-finished").text("Congratulations!! YOU WON!!");
   } else if (fails === 9) {
     $("#messege-game-finished").text(
@@ -152,5 +161,6 @@ const finishedGame = (fails, success, statusGame) => {
   $("#title-instructions").text("Press any key to play again");
   $(".cellToPharse").remove();
   $(".emptyCellToPhrase").remove();
+
   startGame(statusGame);
 };
