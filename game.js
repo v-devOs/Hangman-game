@@ -17,7 +17,7 @@ const startGame = async(statusGame) =>{
   lettersUsed = [];
   phrase="";
 
-  $(".start-mobile-game-button").addClass("display-none")
+  $(".start-mobile-game-button").addClass("display-none");
 
       //Inicio del juego
       if (!statusGame) {
@@ -32,10 +32,7 @@ const startGame = async(statusGame) =>{
         drawCellsToPharse(phrase);
         showCharactersSpecials();
       }
-  
-
-}
-
+    }
 $(document).on("keypress", async () => {
   startGame(statusGame);
 });
@@ -175,5 +172,5 @@ const finishedGame = (fails, success, statusGame) => {
   $("#title-instructions").text("Press any key to play again");
   $(".cellToPharse").remove();
   $(".emptyCellToPhrase").remove();
-  $(".start-mobile-game-button").removeClass("display-none")
-};
+  $(".start-mobile-game-button").removeClass("display-none");
+}
