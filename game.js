@@ -29,7 +29,7 @@ function startGame(statusGame) {
 const getPhrase = async () => {
   const numeroDeLetrasMaximoDeLaFrase = 30;
   const response = await fetch(
-    `http://api.quotable.io/random?maxLength=${numeroDeLetrasMaximoDeLaFrase}`
+    `https://api.quotable.io/random?maxLength=${numeroDeLetrasMaximoDeLaFrase}`
   );
   const phrase = await response.json();
   //Tuve que convertir la frase a minusculas :c
