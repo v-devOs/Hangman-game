@@ -36,6 +36,14 @@
 #title-instructions {
     font-size: 2rem;
 }
+.start-mobile-game-button{
+    margin-top: 50px;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 1.5rem;
+    background-color:antiquewhite;
+    display:none;
+}
 #spaceToCellsPharse{
     padding-top: 10%;
     margin: 2rem;
@@ -98,7 +106,9 @@
     .game {
         grid-template-columns: repeat(1, 1fr);
     }
-
+    .start-mobile-game-button{
+        display:unset;
+       }
     .keyBoardKey {
         width: 2rem;
         height: 2rem;
@@ -131,4 +141,10 @@
         margin-bottom: 1.5rem;
     }
     
+}
+
+
+/*HELPERS*/
+.display-none{
+    display: none;
 }
