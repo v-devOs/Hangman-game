@@ -7,9 +7,9 @@ let lettersUsed = [];
 var phrase;
 
 //Instruccion de iniciar el juego
-startGame(statusGame);
+// startGame(statusGame);
 
-function startGame(statusGame) {
+const startGame = async(statusGame) =>{
   statusGame = false;
   fails = 0; 
   success = 0;
@@ -17,22 +17,28 @@ function startGame(statusGame) {
   lettersUsed = [];
   phrase="";
 
-  $(document).on("keypress", async () => {
-    //Inicio del juego
-    if (!statusGame) {
-      $(".game-image img").attr("src", `./assets/img/${fails}.jpg`);
-      $("#messege-game-finished").text("");
-      $("#title-instructions").text("");
-      statusGame = true;
-      //Llamado de la función para traer la frase
-      phrase = await getPhrase();
-      //Dibujando teclado y celdas para la frase
-      drawKeyBoard();
-      drawCellsToPharse(phrase);
-      showCharactersSpecials();
-    }
-  });
+  $(".start-mobile-game-button").addClass("display-none")
+
+      //Inicio del juego
+      if (!statusGame) {
+        $(".game-image img").attr("src", `./assets/img/${fails}.jpg`);
+        $("#messege-game-finished").text("");
+        $("#title-instructions").text("");
+        statusGame = true;
+        //Llamado de la función para traer la frase
+        phrase = await getPhrase();
+        //Dibujando teclado y celdas para la frase
+        drawKeyBoard();
+        drawCellsToPharse(phrase);
+        showCharactersSpecials();
+      }
+  
+
 }
+
+$(document).on("keypress", async () => {
+  startGame(statusGame);
+});
 //Llama a la Api para obtener la frase generada aleatoriamente.
 const getPhrase = async () => {
   const numeroDeLetrasMaximoDeLaFrase = 30;
@@ -72,14 +78,22 @@ const drawCellsToPharse = (phraseToCell) => {
     );
   }
 };
+
+$(document).on("click", ".start-mobile-game-button", function(){
+  console.log("hey");
+  startGame(statusGame);
+});
+
 //Añandiendo eventos a los botones
 $(document).on("click", ".keyBoardKey", function () {
   let buttonInner = this.textContent;
   //Añadiendo clase respectiva a si es correcta o no el valor de la tecla
   if (checkKeyPressed(buttonInner) === "correct") {
     $(this).addClass("keyPressedCorrect");
+    $(this).prop('disabled', true);
   } else {
     $(this).addClass("keyPressedIncorrect");
+    $(this).prop('disabled', true);
   }
 });
 // Funcion que verifica si el valor de la tecla pulsada existe en la frase generada
@@ -161,6 +175,5 @@ const finishedGame = (fails, success, statusGame) => {
   $("#title-instructions").text("Press any key to play again");
   $(".cellToPharse").remove();
   $(".emptyCellToPhrase").remove();
-
-  startGame(statusGame);
+  $(".start-mobile-game-button").removeClass("display-none")
 };
